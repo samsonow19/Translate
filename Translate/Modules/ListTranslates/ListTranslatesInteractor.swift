@@ -7,3 +7,23 @@
 //
 
 import Foundation
+
+// MARK: - Protocol
+protocol ListTranslatesInteractorInput: AnyObject {
+    
+}
+
+
+// MARK: - Interactor
+final class ListTranslatesInteractor {
+    
+    weak var presenter: ListTranslatesInteractorOutput?
+    
+}
+
+
+// MARK: - ListTranslatesInteractorInput
+extension ListTranslatesInteractor: ListTranslatesInteractorInput {
+    
+    
+}

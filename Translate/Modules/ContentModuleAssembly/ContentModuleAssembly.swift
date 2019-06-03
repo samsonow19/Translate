@@ -10,7 +10,7 @@ import UIKit
 
 final class ContentModuleAssembly {
     
-    func assemleModule() -> UIViewController {
+    func assembleModule() -> UIViewController {
         let view = ContentModuleViewController()
         return view
     }

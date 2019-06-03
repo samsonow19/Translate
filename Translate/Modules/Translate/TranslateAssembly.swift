@@ -6,4 +6,31 @@
 //  Copyright © 2019 Evgen. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+final class TranslateAssembly {
+    
+    func assembleModule() -> UIViewController {
+        
+        let view = TranslateViewController()
+        let presenter = TranslatePresenter()
+
+        let translateService = TranslateServiceImp()
+        let interactor = TranslateInteractor(translateService: translateService)
+        
+        let router = TranslateRouter()
+        
+        view.presenter = presenter
+        
+        presenter.view = view
+        presenter.interactor = interactor
+        presenter.router = router
+        
+        interactor.presenter = presenter
+        
+        router.transition = view
+        
+        return view
+    }
+    
+}

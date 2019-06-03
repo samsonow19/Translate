@@ -8,7 +8,11 @@
 
 import Foundation
 
-final class TranslateService {
+protocol TranslateService {
+    func translation(word: String, fromLang: String, toLang: String, success: @escaping (WordTranslation) -> Void, failure: @escaping (Error?) -> Void)
+}
+
+final class TranslateServiceImp: TranslateService {
     
     private let networkClient: NetworkClient
     private var decoder: JSONDecoder
@@ -20,9 +24,13 @@ final class TranslateService {
     
     func translation(word: String, fromLang: String, toLang: String, success: @escaping (WordTranslation) -> Void, failure: @escaping (Error?) -> Void) {
         
-        let url = URL(string: TranslateEndpoint.url + "?text=\(word)&key=\(TranslateEndpoint.key)&lang=\(fromLang)-\(toLang)")!
+        let url = URL(string: TranslateEndpoint.url+"?key=\(TranslateEndpoint.key)&lang=\(fromLang)-\(toLang)")!
         
-        networkClient.request(url: url) { result in
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = String(format: "text=%@", word).data(using: .utf8)
+        
+        networkClient.request(request: request) { result in
             
             switch result {
             case .success(let data):

@@ -6,4 +6,18 @@
 //  Copyright © 2019 Evgen. All rights reserved.
 //
 
-import Foundation
+import UIKit
+
+// MARK: - Protocol
+protocol ListTranslatesRouterInput {
+    
+    
+}
+
+
+// MARK: - Router
+final class ListTranslatesRouter: ListTranslatesRouterInput {
+    
+    weak var transition: UIViewController?
+    
+}

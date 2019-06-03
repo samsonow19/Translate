@@ -1,0 +1,26 @@
+# OS X
+.DS_Store
+
+# Fastlane 
+fastlane/README.md
+fastlane/report.xml
+
+# Xcode
+build/
+*.pbxuser
+!default.pbxuser
+xcuserdata
+*.xccheckout
+DerivedData
+
+# CocoaPods
+Pods/
+Podfile.lock
+
+.idea/.name
+.idea/modules.xml
+.idea/tnt-club-zu.iml
+.idea/workspace.xml
+.idea/xcode.xml
+.idea/codeStyles/Project.xml
+.idea/runConfigurations/TNT_Club.xml

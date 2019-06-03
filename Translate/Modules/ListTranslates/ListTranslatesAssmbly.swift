@@ -8,18 +8,16 @@
 
 import UIKit
 
-final class TranslateConfigurator {
+final class ListTranslatesAssmbly {
     
-    // MARK: - Module init WITH parameters
-    
-    func instantiateModuleTransitionHandler() -> UIViewController {
+    func assembleModule() -> UIViewController {
         
-        let view = TranslateViewController()
-        let presenter = TranslatePresenter()
+        let view = ListTranslatesViewController()
+        let presenter = ListTranslatesPresenter()
         
-        let interactor = TranslateInteractor()
+        let interactor = ListTranslatesInteractor()
         
-        let router = TranslateRouter()
+        let router = ListTranslatesRouter()
         
         view.presenter = presenter
         
