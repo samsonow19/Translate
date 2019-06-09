@@ -16,11 +16,17 @@ final class ContentModuleViewController: UITabBarController {
     }
     
     private func configureInterface() {
+        
+        let sourceLanguageModule = SourceLanguageAssembly().assembleModule()
+        sourceLanguageModule.tabBarItem.title = "Выбор"
 
         let translateModule = TranslateAssembly().assembleModule()
-        let listTranslatesModule = ListTranslatesAssmbly().assembleModule()
+        translateModule.tabBarItem.title = "Переводчик"
         
-        viewControllers = [translateModule, listTranslatesModule]
+        let listTranslatesModule = ListTranslatesAssembly().assembleModule()
+        listTranslatesModule.tabBarItem.title = "Список"
+        
+        viewControllers = [sourceLanguageModule, translateModule, listTranslatesModule]
 
         delegate = self
         tabBar.isTranslucent = false

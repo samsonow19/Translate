@@ -15,41 +15,34 @@ protocol TranslateService {
 final class TranslateServiceImp: TranslateService {
     
     private let networkClient: NetworkClient
-    private var decoder: JSONDecoder
+    typealias TranslateResult = Result<WordTranslation, Error>
     
-    init(networkClient: NetworkClient = NetworkClient(), decoder: JSONDecoder = JSONDecoder()) {
+    init(networkClient: NetworkClient = NetworkClientImp()) {
         self.networkClient = networkClient
-        self.decoder = decoder
     }
     
     func translation(word: String, fromLang: String, toLang: String, success: @escaping (WordTranslation) -> Void, failure: @escaping (Error?) -> Void) {
         
-        let url = URL(string: TranslateEndpoint.url+"?key=\(TranslateEndpoint.key)&lang=\(fromLang)-\(toLang)")!
+        let stringUrl = TranslateEndpoint.url+"?key=\(TranslateEndpoint.key)&lang=\(fromLang)-\(toLang)"
         
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        request.httpBody = String(format: "text=%@", word).data(using: .utf8)
+        guard let url = URL(string: stringUrl) else {
+            failure(ServerError.urlError)
+            return
+        }
         
-        networkClient.request(request: request) { result in
+        let parrams: [String: String] = ["text": word]
+        
+        networkClient.request(url: url, parrams: parrams, method: .post) { (result: TranslateResult) in
             
             switch result {
-            case .success(let data):
                 
-                guard let data = data else {
-                    failure(nil)
-                    return
-                }
-                do {
-                    let model = try self.decoder.decode(WordTranslation.self, from: data)
-                    success(model)
-                } catch {
-                    failure(error)
-                }
+            case .success(let model):
+                success(model)
                 
             case .failure(let error):
                 failure(error)
- 
             }
+            
             
         }
         

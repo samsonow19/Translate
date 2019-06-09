@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="14490.99" systemVersion="18F132" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="CurentLanguages" representedClassName="CurentLanguages" syncable="YES" codeGenerationType="class">
+        <relationship name="from" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Language" syncable="YES"/>
+        <relationship name="to" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Language" syncable="YES"/>
+    </entity>
     <entity name="Language" representedClassName="Language" syncable="YES" codeGenerationType="class">
-        <attribute name="id" optional="YES" attributeType="Integer 32" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="language" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="word" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Word" inverseName="language" inverseEntity="Word" syncable="YES"/>
     </entity>
     <entity name="Translation" representedClassName="Translation" syncable="YES" codeGenerationType="class">
-        <relationship name="firstLang" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Language" syncable="YES"/>
-        <relationship name="firstWord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Word" syncable="YES"/>
-        <relationship name="secondLang" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Language" syncable="YES"/>
-        <relationship name="secondWord" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Word" syncable="YES"/>
+        <relationship name="fromWord" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Word" syncable="YES"/>
+        <relationship name="toWord" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="Word" syncable="YES"/>
     </entity>
     <entity name="Word" representedClassName="Word" syncable="YES" codeGenerationType="class">
-        <attribute name="value" optional="YES" attributeType="String" syncable="YES"/>
-        <relationship name="language" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Language" inverseName="word" inverseEntity="Language" syncable="YES"/>
+        <attribute name="word" attributeType="String" syncable="YES"/>
+        <relationship name="language" optional="YES" maxCount="1" deletionRule="Cascade" destinationEntity="Language" inverseName="word" inverseEntity="Language" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Language" positionX="-275.17578125" positionY="44.67578125" width="128" height="88"/>
-        <element name="Translation" positionX="16.26171875" positionY="21.9765625" width="128" height="103"/>
-        <element name="Word" positionX="-121.18359375" positionY="-285.77734375" width="128" height="73"/>
+        <element name="CurentLanguages" positionX="-207" positionY="-90" width="128" height="75"/>
+        <element name="Language" positionX="-443.61328125" positionY="-5.98828125" width="128" height="73"/>
+        <element name="Translation" positionX="16.26171875" positionY="21.9765625" width="128" height="75"/>
+        <element name="Word" positionX="-121.18359375" positionY="-285.77734375" width="128" height="75"/>
     </elements>
 </model>

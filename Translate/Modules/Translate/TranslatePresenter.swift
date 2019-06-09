@@ -35,7 +35,7 @@ final class TranslatePresenter {
 extension TranslatePresenter: TranslateViewOutput {
     
     func didTaptranslateButton(with word: String) {
-        interactor?.translation(word: word, fromLang: "ru", toLang: "en")
+        interactor?.translate(word: word)
     }
     
 }

@@ -8,18 +8,23 @@
 
 import UIKit
 
-final class ListTranslatesAssmbly {
+final class ListTranslatesAssembly {
     
     func assembleModule() -> UIViewController {
         
         let view = ListTranslatesViewController()
-        let presenter = ListTranslatesPresenter()
+        let dataProvider = ListTranslatesDataProviderImp()
+        let presenter = ListTranslatesPresenter(dataProvider: dataProvider)
         
-        let interactor = ListTranslatesInteractor()
+        let interactor = ListTranslatesInteractor(databaseService: CoreDataServiceImp())
         
         let router = ListTranslatesRouter()
         
         view.presenter = presenter
+        let tableDataSource = ListTranslatesDataSourceImp()
+        let searchDataSource = ListTranslatesSearchDataSourceImp()
+        view.dataSource = tableDataSource
+        view.searchDataSource = searchDataSource
         
         presenter.view = view
         presenter.interactor = interactor

@@ -11,34 +11,36 @@ import UIKit
 
 // MARK: - View Protocol
 protocol ListTranslatesViewInput: AnyObject {
-    
-    //func setup(with viewModel: ListTranslatesViewModel)
+    func setup(with viewModel: ListTranslatesViewModel)
 }
 
 
 // MARK: - ListTranslatesView
-final class ListTranslatesViewController: UIViewController, ListTranslatesViewInput {
+final class ListTranslatesViewController: UIViewController {
     
     // MARK: - Properties
     
     var presenter: ListTranslatesViewOutput?
+    var dataSource: ListTranslatesDataSource?
+    var searchDataSource: SearchDataSource?
     
-   // private var viewModel: ListTranslatesViewModel?
     private let tableView = UITableView()
+    private let deleteButton = UIButton()
+    private let searchBar = UISearchBar()
     
     
     // MARK: - Lifecycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        view.backgroundColor = .white
         configureInterface()
-       // presenter?.viewDidLoad()
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-       // presenter?.viewWillAppear()
+        presenter?.viewWillAppear()
     }
     
     
@@ -47,71 +49,61 @@ final class ListTranslatesViewController: UIViewController, ListTranslatesViewIn
     private func configureInterface() {
 
         self.tabBarItem.title = "Список"
-        tableView.allowsSelection = false
-        tableView.showsVerticalScrollIndicator = false
-        tableView.delegate = self
-        tableView.dataSource = self
+        dataSource?.setup(with: tableView)
         
         tableView.translatesAutoresizingMaskIntoConstraints = false
-        // FIXME: - REGISTER CELLS
         view.addSubview(tableView)
-       
+        
+        deleteButton.setTitle("Очистить список переводов", for: .normal)
+        deleteButton.translatesAutoresizingMaskIntoConstraints = false
+        deleteButton.addTarget(self, action: #selector(didTapDeleteButton), for: .touchDown)
+        view.addSubview(deleteButton)
+        
+        searchBar.searchBarStyle = UISearchBar.Style.prominent
+        searchBar.placeholder = " Search..."
+        searchBar.sizeToFit()
+        searchBar.isTranslucent = false
+        searchBar.backgroundImage = UIImage()
+        searchBar.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(searchBar)
+        searchDataSource?.setup(searchBar: searchBar, deleage: presenter)
         
         NSLayoutConstraint.activate([
+
+            searchBar.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 0),
+            searchBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
+            searchBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
+            searchBar.heightAnchor.constraint(equalToConstant: 50),
             
-            tableView.topAnchor.constraint(equalTo: view.topAnchor, constant: 0),
+            tableView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 0),
             tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: 0),
             tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 0),
-            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: 0)
+
+            deleteButton.topAnchor.constraint(equalTo: tableView.bottomAnchor, constant: 0),
+            
+            deleteButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            deleteButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            deleteButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            
         ])
         
     }
     
-    
     // MARK: - Private methods
     
-    
-    
-}
-
-
-// MARK: - DataSource
-extension ListTranslatesViewController: UITableViewDataSource {
-    
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 0
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        return UITableViewCell()
+    @objc private func didTapDeleteButton() {
+        presenter?.didTapDeleteButton()
     }
     
 }
 
 
-// MARK: - Delegate
-extension ListTranslatesViewController: UITableViewDelegate {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
-    }
-    
-    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 100
+// MARK: - ListTranslatesViewInput
+extension ListTranslatesViewController: ListTranslatesViewInput {
+
+    func setup(with viewModel: ListTranslatesViewModel) {
+        dataSource?.update(with: viewModel)
     }
 
 }
 
-
-//// MARK: - ListTranslatesViewInput
-//extension ListTranslatesViewController: ListTranslatesViewInput {
-//
-//    func setup(with viewModel: ListTranslatesViewModel) {
-//
-//        self.viewModel = viewModel
-//        tableView.reloadData()
-//    }
-//
-//}

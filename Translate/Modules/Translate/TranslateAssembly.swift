@@ -16,7 +16,8 @@ final class TranslateAssembly {
         let presenter = TranslatePresenter()
 
         let translateService = TranslateServiceImp()
-        let interactor = TranslateInteractor(translateService: translateService)
+        let databaseService = CoreDataServiceImp()
+        let interactor = TranslateInteractor(translateService: translateService, databaseService: databaseService)
         
         let router = TranslateRouter()
         

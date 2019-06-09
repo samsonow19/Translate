@@ -9,5 +9,15 @@
 import Foundation
 
 enum ServerError: Error {
-     case statusCode
+    case statusCode
+    case serverError
+    case mapingError
+    case urlError
+}
+
+
+enum DataBaseError: Error {
+    case notSave
+    case notFoundWord
+    case noRemove
 }

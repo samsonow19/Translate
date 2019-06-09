@@ -25,7 +25,7 @@ final class TranslateViewController: UIViewController {
     //private var viewModel: TranslateViewModel?
     private let inputText = UITextField()
     private let translationLabel = UILabel()
-    private let translateButton = UIButton()
+    private let translationButton = UIButton()
     
     
     // MARK: - Lifecycle
@@ -45,7 +45,7 @@ final class TranslateViewController: UIViewController {
     
     private func configureInterface() {
         
-        self.tabBarItem.title = "Перевод"
+        self.tabBarItem.title = "Переводчик"
         inputText.translatesAutoresizingMaskIntoConstraints = false
         inputText.placeholder = "Введите слово"
         view.addSubview(inputText)
@@ -54,11 +54,11 @@ final class TranslateViewController: UIViewController {
         translationLabel.text = "Перевод слова"
         view.addSubview(translationLabel)
         
-        translateButton.translatesAutoresizingMaskIntoConstraints = false
-        translateButton.setTitle("Перевести", for: .normal)
-        translateButton.setTitleColor(.black, for: .normal)
-        translateButton.addTarget(self, action: #selector(didTapTranslateButton), for: .touchDown)
-        view.addSubview(translateButton)
+        translationButton.translatesAutoresizingMaskIntoConstraints = false
+        translationButton.setTitle("Перевести", for: .normal)
+        translationButton.setTitleColor(.black, for: .normal)
+        translationButton.addTarget(self, action: #selector(didTaptranslationButton), for: .touchDown)
+        view.addSubview(translationButton)
         
         NSLayoutConstraint.activate([
             
@@ -71,14 +71,14 @@ final class TranslateViewController: UIViewController {
             translationLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
             translationLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             
-            translateButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
-            translateButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            translateButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
+            translationButton.bottomAnchor.constraint(equalTo: view.bottomAnchor, constant: -20),
+            translationButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            translationButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20)
             
         ])
     }
     
-    @objc private func didTapTranslateButton() {
+    @objc private func didTaptranslationButton() {
         presenter?.didTaptranslateButton(with: inputText.text ?? "")
     }
     

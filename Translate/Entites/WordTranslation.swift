@@ -9,7 +9,6 @@
 import Foundation
 
 struct WordTranslation: Decodable {
-    
     let code: Int
     let lang: String
     let text: [String]
